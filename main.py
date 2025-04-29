@@ -3,6 +3,12 @@ from fastapi.staticfiles import StaticFiles
 import asyncio
 from joke_engine import generate_joke_audio
 from contextlib import asynccontextmanager
+import os
+import uvicorn
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8000))  # Default to 8000 if PORT isn't set
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
