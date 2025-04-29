@@ -44,19 +44,19 @@ async def trigger_joke():
     joke_text = generate_joke_text(headline)
 
     # Invoke TTS to generate the audio file
-    audio_file = text_to_speech(joke_text)
+    # audio_file = text_to_speech(joke_text)
 
-    if audio_file and os.path.exists(audio_file):
-        return {
-            "status": "Joke generated",
-            "joke": joke_text,
-            "audio_file": audio_file
-        }
+    # if audio_file and os.path.exists(audio_file):
+    #     return {
+    #         "status": "Joke generated",
+    #         "joke": joke_text,
+    #         "audio_file": audio_file
+    #     }
     
     return {
         "status": "Joke generated",
-        "joke": joke_text,
-        "error": "Audio file could not be created"
+        "joke": joke_text
+        # "error": "Audio file could not be created"
     }
 
 @app.get("/latest-audio")
