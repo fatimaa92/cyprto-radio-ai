@@ -30,7 +30,7 @@ def read_root():
 
 @app.get("/generate-joke")
 async def trigger_joke():
-    headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
+    headline = get_latest_crypto_headline()
     joke_text = generate_joke_text(headline)
     return {"status": "Joke generated!", "joke": joke_text}
 
