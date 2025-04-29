@@ -5,6 +5,7 @@ from joke_engine import generate_joke_audio
 from contextlib import asynccontextmanager
 import os
 import uvicorn
+import openai
 
 print("OpenAI Package Version:", openai.__version__)
 
