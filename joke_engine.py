@@ -10,6 +10,24 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 # VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")  # Get this from your ElevenLabs dashboard
 
+### Fetch the Latest Crypto Headline
+def get_latest_crypto_headline():
+    url = "https://api.coingecko.com/api/v3/search/trending"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        trending_coins = data["coins"]
+        
+        if trending_coins:
+            latest_headline = f"{trending_coins[0]['item']['name']} is trending with {trending_coins[0]['item']['symbol']}!"
+            return latest_headline
+        else:
+            return "No trending crypto found."
+
+    else:
+        return f"Error fetching data: {response.status_code}"
+
 def generate_joke_text(headline):
     prompt = f"You're a sarcastic crypto radio host. Given the headline: {headline}, roast it with a funny, dramatic monologue like someone who lost everything in a yield farm. Add dry humor and irony."
     
