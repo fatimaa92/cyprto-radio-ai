@@ -6,6 +6,8 @@ from contextlib import asynccontextmanager
 import os
 import uvicorn
 
+print("OpenAI Package Version:", openai.__version__)
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     task = asyncio.create_task(loop())
