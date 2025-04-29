@@ -6,7 +6,7 @@ import os
 # ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 # openai.api_key = os.getenv("OPENAI_API_KEY")
 # Initialize OpenAI client
-client = OpenAI(api_key="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")# Debugging
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # print("OpenAI API Key:", os.getenv("OPENAI_API_KEY"))  # Check if API key is loaded
 # print("OpenAI Version:", openai.__version__)  # Check installed OpenAI version
 
