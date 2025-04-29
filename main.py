@@ -1,27 +1,17 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import asyncio
-from joke_engine import generate_joke_audio
-from contextlib import asynccontextmanager
 import os
 import uvicorn
-import openai
+from joke_engine import generate_joke_text  # Updated import
 
+import openai
 print("OpenAI Package Version:", openai.__version__)
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    task = asyncio.create_task(loop())
-    yield
-    task.cancel()
+# Define FastAPI instance
+app = FastAPI()
 
-async def loop():
-    while True:
-        await generate_joke_audio()
-        await asyncio.sleep(90)
-
-# Define FastAPI instance with lifespan events
-app = FastAPI(lifespan=lifespan)
+# Mount static directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
@@ -30,8 +20,9 @@ def read_root():
 
 @app.get("/generate-joke")
 async def trigger_joke():
-    await generate_joke_audio()
-    return {"status": "Joke generated!"} ## For testing
+    headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."  # Example headline
+    joke_text = generate_joke_text(headline)  # Generate joke text
+    return {"status": "Joke generated!", "joke": joke_text}
 
 # Ensure main execution starts correctly
 if __name__ == "__main__":
