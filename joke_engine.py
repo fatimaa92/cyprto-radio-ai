@@ -3,14 +3,17 @@ import requests
 import os
 
 # Set API keys from environment variables
-openai.api_key = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+
+# Initialize OpenAI client
+client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 async def generate_joke_audio():
     headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
 
-    # Use GPT to roast the headline with OpenAI's new API format
-    response = openai.chat_completions.create(
+    # Use GPT to roast the headline with the corrected OpenAI API format
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You're a bitter ex-crypto investor turned sarcastic news anchor."},
@@ -18,7 +21,6 @@ async def generate_joke_audio():
         ]
     )
 
-    # Extract text correctly
     roast = response.choices[0].message.content
     print("[JOKE]", roast)
 
