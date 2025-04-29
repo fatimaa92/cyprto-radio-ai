@@ -1,6 +1,19 @@
-import time
-from joke_engine import generate_headline_joke_tts
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+import asyncio
+from joke_engine import generate_joke_audio
 
-while True:
-    generate_headline_joke_tts()
-    time.sleep(90)
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+def read_root():
+    return {"message": "DELI is roasting."}
+
+@app.on_event("startup")
+async def run_background_task():
+    async def loop():
+        while True:
+            await generate_joke_audio()
+            await asyncio.sleep(90)
+    asyncio.create_task(loop())
