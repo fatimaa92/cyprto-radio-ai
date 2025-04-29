@@ -14,7 +14,7 @@ async def joke_loop():
         headline = get_latest_crypto_headline()
         joke_text = generate_joke_text(headline)
         print(f"[LOOP JOKE] {joke_text}")
-        await asyncio.sleep(10)  # Wait for 90 seconds before generating the next joke
+        await asyncio.sleep(60)  # Wait for 90 seconds before generating the next joke
 
 # Define FastAPI instance
 app = FastAPI()
