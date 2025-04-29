@@ -3,16 +3,26 @@ from fastapi.staticfiles import StaticFiles
 import asyncio
 import os
 import uvicorn
-from joke_engine import generate_joke_text  # Updated import
+from joke_engine import generate_joke_text
 
 import openai
 print("OpenAI Package Version:", openai.__version__)
 
+async def joke_loop():
+    """ Continuously generates jokes every 90 seconds """
+    while True:
+        headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
+        joke_text = generate_joke_text(headline)
+        print(f"[LOOP JOKE] {joke_text}")
+        await asyncio.sleep(10)  # Wait for 90 seconds before generating the next joke
+
 # Define FastAPI instance
 app = FastAPI()
 
-# Mount static directory
-app.mount("/static", StaticFiles(directory="static"), name="static")
+@app.on_event("startup")
+async def startup_event():
+    """ Start the background loop when the app starts """
+    asyncio.create_task(joke_loop())
 
 @app.get("/")
 def read_root():
@@ -20,8 +30,8 @@ def read_root():
 
 @app.get("/generate-joke")
 async def trigger_joke():
-    headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."  # Example headline
-    joke_text = generate_joke_text(headline)  # Generate joke text
+    headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
+    joke_text = generate_joke_text(headline)
     return {"status": "Joke generated!", "joke": joke_text}
 
 # Ensure main execution starts correctly
