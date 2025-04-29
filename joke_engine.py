@@ -7,8 +7,8 @@ import requests
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ElevenLabs API setup
-# ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-# VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")  # Get this from your ElevenLabs dashboard
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+VOICE_ID = "GcPTBXiuIz3xYDstbCNX"
 
 ### Fetch the Latest Crypto Headline
 def get_latest_crypto_headline():
@@ -40,30 +40,30 @@ def generate_joke_text(headline):
     print(f"[JOKE] {joke_text}")
     return joke_text
 
-# def text_to_speech(joke_text):
-#     url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
-#     headers = {
-#         "xi-api-key": ELEVENLABS_API_KEY,
-#         "Content-Type": "application/json"
-#     }
-#     payload = {
-#         "text": joke_text,
-#         "model_id": "eleven_monolingual_v1",
-#         "voice_settings": {
-#             "stability": 0.3,
-#             "similarity_boost": 0.8
-#         }
-#     }
-#     response = requests.post(url, headers=headers, json=payload)
+def text_to_speech(joke_text):
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+    headers = {
+        "xi-api-key": ELEVENLABS_API_KEY,
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "text": joke_text,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+            "stability": 0.3,
+            "similarity_boost": 0.8
+        }
+    }
+    response = requests.post(url, headers=headers, json=payload)
 
-#     if response.status_code != 200:
-#         raise Exception(f"ElevenLabs TTS failed: {response.text}")
+    # if response.status_code != 200:
+    #     raise Exception(f"ElevenLabs TTS failed: {response.text}")
     
-#     # Save to file (optional)
-#     with open("joke_audio.mp3", "wb") as f:
-#         f.write(response.content)
+    # Save to file (optional)
+    with open("joke_audio.mp3", "wb") as f:
+        f.write(response.content)
 
-#     return "joke_audio.mp3"
+    return "joke_audio.mp3"
 
 # def generate_joke_audio(headline):
 #     joke_text = generate_joke_text(headline)
