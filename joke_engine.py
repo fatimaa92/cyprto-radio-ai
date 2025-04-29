@@ -5,8 +5,6 @@ import os
 openai.api_key = os.getenv("OPENAI_API_KEY")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
-print("OpenAI Key:", os.getenv("OPENAI_API_KEY"))
-print("ElevenLabs Key:", os.getenv("ELEVENLABS_API_KEY"))
 
 async def generate_joke_audio():
     # Replace with live headline fetch later
