@@ -21,17 +21,17 @@ async def generate_joke_audio():
     roast = response.choices[0].message.content
     print("[JOKE]", roast)
 
-    # Send to ElevenLabs TTS
-    tts_response = requests.post(
-        "https://api.elevenlabs.io/v1/text-to-speech/YOUR_VOICE_ID",
-        headers={
-            "xi-api-key": ELEVENLABS_API_KEY,
-            "Content-Type": "application/json"
-        },
-        json={"text": roast, "voice_settings": {"stability": 0.4, "similarity_boost": 0.6}},
-    )
+    # # Send to ElevenLabs TTS
+    # tts_response = requests.post(
+    #     "https://api.elevenlabs.io/v1/text-to-speech/YOUR_VOICE_ID",
+    #     headers={
+    #         "xi-api-key": ELEVENLABS_API_KEY,
+    #         "Content-Type": "application/json"
+    #     },
+    #     json={"text": roast, "voice_settings": {"stability": 0.4, "similarity_boost": 0.6}},
+    # )
 
-    # Save to file (OBS can read from this)
-    with open("speech.mp3", "wb") as f:
-        f.write(tts_response.content)
-    print("[TTS] Saved to speech.mp3")
+    # # Save to file (OBS can read from this)
+    # with open("speech.mp3", "wb") as f:
+    #     f.write(tts_response.content)
+    # print("[TTS] Saved to speech.mp3")
