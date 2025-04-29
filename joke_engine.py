@@ -14,19 +14,16 @@ def generate_joke_audio():
     # Define the headline to roast
     headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
 
-    # Generate completion using OpenAI API
-    completion = client.chat.completions.create(
-        model="gpt-4.1",
+    # GPT joke generation using new SDK syntax
+    response = client.chat.completions.create(
+        model="gpt-4",
         messages=[
             {"role": "system", "content": "You're a bitter ex-crypto investor turned sarcastic news anchor."},
             {"role": "user", "content": f"Roast this crypto headline: {headline}"}
         ]
     )
-
-    # Extract and print the roast
-    roast = completion.choices[0].message.content
+    roast = response.choices[0].message.content
     print("[JOKE]", roast)
-    return roast
 
 generate_joke_audio()
     # # Send to ElevenLabs TTS
