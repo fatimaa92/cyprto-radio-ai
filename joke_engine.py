@@ -1,22 +1,22 @@
-import openai 
+from openai import OpenAI
 import requests
 import os
 
 # Set API keys from environment variables
 # ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = os.getenv("OPENAI_API_KEY")
 # Initialize OpenAI client
-# client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # Debugging
-print("OpenAI API Key:", os.getenv("OPENAI_API_KEY"))  # Check if API key is loaded
-print("OpenAI Version:", openai.__version__)  # Check installed OpenAI version
+# print("OpenAI API Key:", os.getenv("OPENAI_API_KEY"))  # Check if API key is loaded
+# print("OpenAI Version:", openai.__version__)  # Check installed OpenAI version
 
 def generate_joke_audio():
     # Define the headline to roast
     headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
 
     # Generate completion using OpenAI API
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model="gpt-4.1",
         messages=[
             {"role": "system", "content": "You're a bitter ex-crypto investor turned sarcastic news anchor."},
