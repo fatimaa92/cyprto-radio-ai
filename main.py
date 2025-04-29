@@ -4,6 +4,7 @@ import asyncio
 import os
 import uvicorn
 from joke_engine import generate_joke_text, get_latest_crypto_headline
+from fastapi.responses import FileResponse
 
 import openai
 print("OpenAI Package Version:", openai.__version__)
@@ -33,6 +34,13 @@ async def trigger_joke():
     headline = get_latest_crypto_headline()
     joke_text = generate_joke_text(headline)
     return {"status": "Joke generated!", "joke": joke_text}
+
+@app.get("/latest-audio")
+async def serve_audio():
+    audio_path = "joke_audio.mp3"
+    if os.path.exists(audio_path):
+        return FileResponse(audio_path, media_type="audio/mpeg")
+    return {"error": "Audio file not found."}
 
 # Ensure main execution starts correctly
 if __name__ == "__main__":
