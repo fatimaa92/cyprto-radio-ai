@@ -7,10 +7,11 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-async def generate_joke_audio():
+def generate_joke_audio():
+    # Define the headline to roast
     headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
 
-    # Make request using the correct OpenAI API format
+    # Generate completion using OpenAI API
     completion = client.chat.completions.create(
         model="gpt-4.1",
         messages=[
@@ -19,8 +20,12 @@ async def generate_joke_audio():
         ]
     )
 
+    # Extract and print the roast
     roast = completion.choices[0].message.content
     print("[JOKE]", roast)
+    return roast
+
+generate_joke_audio()
     # # Send to ElevenLabs TTS
     # tts_response = requests.post(
     #     "https://api.elevenlabs.io/v1/text-to-speech/YOUR_VOICE_ID",
