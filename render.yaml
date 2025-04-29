@@ -1,0 +1,6 @@
+services:
+  - type: worker
+    name: deli-fm-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
