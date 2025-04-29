@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 import asyncio
 import os
 import uvicorn
-from joke_engine import generate_joke_text
+from joke_engine import generate_joke_text, get_latest_crypto_headline
 
 import openai
 print("OpenAI Package Version:", openai.__version__)
@@ -11,7 +11,7 @@ print("OpenAI Package Version:", openai.__version__)
 async def joke_loop():
     """ Continuously generates jokes every 90 seconds """
     while True:
-        headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
+        headline = get_latest_crypto_headline()
         joke_text = generate_joke_text(headline)
         print(f"[LOOP JOKE] {joke_text}")
         await asyncio.sleep(10)  # Wait for 90 seconds before generating the next joke
