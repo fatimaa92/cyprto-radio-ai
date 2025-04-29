@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 import asyncio
 import os
 import uvicorn
-from joke_engine import generate_joke_text, get_latest_crypto_headline
+from joke_engine import generate_joke_text, get_latest_crypto_headline, text_to_speech
 from fastapi.responses import FileResponse
 
 import openai
@@ -14,8 +14,17 @@ async def joke_loop():
     while True:
         headline = get_latest_crypto_headline()
         joke_text = generate_joke_text(headline)
-        print(f"[LOOP JOKE] {joke_text}")
-        await asyncio.sleep(60)  # Wait for 90 seconds before generating the next joke
+
+        # Convert joke into audio
+        audio_file = text_to_speech(joke_text)
+
+        if audio_file:
+            print(f"Loop audio file generated: {audio_file}")
+        else:
+            print("Audio generation failed.")
+
+        print(f"Loop joke: {joke_text}")
+        await asyncio.sleep(30)
 
 # Define FastAPI instance
 app = FastAPI()
@@ -33,14 +42,30 @@ def read_root():
 async def trigger_joke():
     headline = get_latest_crypto_headline()
     joke_text = generate_joke_text(headline)
-    return {"status": "Joke generated!", "joke": joke_text}
+
+    # Invoke TTS to generate the audio file
+    audio_file = text_to_speech(joke_text)
+
+    if audio_file and os.path.exists(audio_file):
+        return {
+            "status": "Joke generated",
+            "joke": joke_text,
+            "audio_file": audio_file
+        }
+    
+    return {
+        "status": "Joke generated",
+        "joke": joke_text,
+        "error": "Audio file could not be created"
+    }
 
 @app.get("/latest-audio")
 async def serve_audio():
+    """ Serve the latest generated joke audio file """
     audio_path = "joke_audio.mp3"
     if os.path.exists(audio_path):
         return FileResponse(audio_path, media_type="audio/mpeg")
-    return {"error": "Audio file not found."}
+    return {"error": "Audio file not found"}
 
 # Ensure main execution starts correctly
 if __name__ == "__main__":
