@@ -31,8 +31,7 @@ def get_latest_crypto_headline():
         return f"Error fetching data: {response.status_code}"
 
 ### Generate Joke Using the Latest Headline
-def generate_joke_text():
-    headline = get_latest_crypto_headline()  # Get the latest trending crypto headline
+def generate_joke_text(headline):
 
     prompt = f"You're a sarcastic crypto radio host. Given the headline: {headline}, roast it with a funny, dramatic monologue like someone who lost everything in a yield farm. Add dry humor and irony."
     
