@@ -5,6 +5,8 @@ import os
 # Set API keys from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+print("OPENAI_API_KEY:", os.getenv("OPENAI_API_KEY"))  # Debug API key presence
+
 
 async def generate_joke_audio():
     headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
