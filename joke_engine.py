@@ -2,15 +2,15 @@ import openai
 import requests
 import os
 
+# Set API keys from environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-
 
 async def generate_joke_audio():
     # Replace with live headline fetch later
     headline = "Solana surges 20% after meme coin called 'Bonk Bonk' goes viral."
 
-    # Use GPT to roast the headline
+    # Use GPT to roast the headline with the updated OpenAI API
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[
@@ -18,8 +18,11 @@ async def generate_joke_audio():
             {"role": "user", "content": f"Roast this crypto headline: {headline}"}
         ]
     )
-    roast = response.choices[0].message.content
+
+    # Extract the roast text correctly
+    roast = response["choices"][0]["message"]["content"]
     print("[JOKE]", roast)
+
 
     # # Send to ElevenLabs TTS
     # tts_response = requests.post(
