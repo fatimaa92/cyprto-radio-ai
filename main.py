@@ -25,6 +25,11 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def read_root():
     return {"message": "DELI is roasting."}
 
+@app.get("/generate-joke")
+async def trigger_joke():
+    await generate_joke_audio()
+    return {"status": "Joke generated!"} ## For testing
+
 # Ensure main execution starts correctly
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))  # Default to 8000 if PORT isn't set
