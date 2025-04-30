@@ -32,11 +32,11 @@ async def joke_loop():
         await asyncio.sleep(90)  # Change from 30 to 90 seconds
 
 async def ticker_loop():
-    """ Continuously fetch crypto prices every 30 seconds """
+    """ Continuously fetch crypto prices every 120 seconds """
     while True:
         prices = get_crypto_prices()
         print("Latest Prices:", prices)
-        await asyncio.sleep(60)
+        await asyncio.sleep(120)
 
 @app.on_event("startup")
 async def startup_event():
