@@ -44,9 +44,13 @@ async def startup_event():
     asyncio.create_task(joke_loop())
     asyncio.create_task(ticker_loop())
 
+# @app.get("/")
+# def read_root():
+#     return {"message": "DELI is roasting."}
+
 @app.get("/")
-def read_root():
-    return {"message": "DELI is roasting."}
+async def serve_homepage():
+    return FileResponse("static/index.html")
 
 @app.get("/generate-joke")
 async def trigger_joke():
