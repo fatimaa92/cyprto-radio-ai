@@ -20,13 +20,13 @@ async def joke_loop():
         headline = get_latest_crypto_headline()
         joke_text = generate_joke_text(headline)
 
-        # Convert joke into audio
-        audio_file = text_to_speech(joke_text)
+        # # Convert joke into audio
+        # audio_file = text_to_speech(joke_text)
 
-        if audio_file:
-            print(f"Loop audio file generated: {audio_file}")
-        else:
-            print("Audio generation failed.")
+        # if audio_file:
+        #     print(f"Loop audio file generated: {audio_file}")
+        # else:
+        #     print("Audio generation failed.")
 
         print(f"Loop joke: {joke_text}")
         await asyncio.sleep(90)  # Change from 30 to 90 seconds
