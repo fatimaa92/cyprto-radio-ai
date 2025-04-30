@@ -3,10 +3,9 @@ from fastapi.staticfiles import StaticFiles
 import asyncio
 import os
 import uvicorn
+from joke_engine import generate_joke_text, get_latest_crypto_headline, text_to_speech
 from fastapi.responses import FileResponse
 from crypto_ticker import get_crypto_prices
-from joke_engine import generate_joke_text, get_latest_crypto_headline, text_to_speech
-from contextlib import asynccontextmanager
 
 import openai
 
@@ -21,13 +20,13 @@ async def joke_loop():
         headline = get_latest_crypto_headline()
         joke_text = generate_joke_text(headline)
 
-        # # Convert joke into audio
-        # audio_file = text_to_speech(joke_text)
+        # Convert joke into audio
+        audio_file = text_to_speech(joke_text)
 
-        # if audio_file:
-        #     print(f"Loop audio file generated: {audio_file}")
-        # else:
-        #     print("Audio generation failed.")
+        if audio_file:
+            print(f"Loop audio file generated: {audio_file}")
+        else:
+            print("Audio generation failed.")
 
         print(f"Loop joke: {joke_text}")
         await asyncio.sleep(90)  # Change from 30 to 90 seconds
@@ -39,16 +38,11 @@ async def ticker_loop():
         print("Latest Prices:", prices)
         await asyncio.sleep(60)
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """ Start background tasks when FastAPI app starts """
+@app.on_event("startup")
+async def startup_event():
+    """ Start background loops when the app starts """
     asyncio.create_task(joke_loop())
     asyncio.create_task(ticker_loop())
-    yield  # Keeps app running
-
-# Initialize FastAPI app with lifespan event
-app = FastAPI(lifespan=lifespan)
 
 # @app.get("/")
 # def read_root():
